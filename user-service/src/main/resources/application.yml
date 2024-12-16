@@ -6,9 +6,9 @@ spring:
     name: user-service
   data:
     mongodb:
-      uri: mongodb://localhost:27017/user
+      uri: mongodb://mongo:27017/user
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka
