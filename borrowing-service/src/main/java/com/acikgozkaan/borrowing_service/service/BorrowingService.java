@@ -1,15 +1,13 @@
 package com.acikgozkaan.borrowing_service.service;
 
-import com.acikgozkaan.book_service.core.exception.BookNotFoundException;
-import com.acikgozkaan.book_service.entity.Book;
 import com.acikgozkaan.borrowing_service.core.exception.BorrowingNotFoundException;
 import com.acikgozkaan.borrowing_service.core.feignClient.BookServiceClient;
 import com.acikgozkaan.borrowing_service.core.feignClient.UserServiceClient;
+import com.acikgozkaan.borrowing_service.dto.response.FeignBookResponse;
+import com.acikgozkaan.borrowing_service.dto.response.FeignUserResponse;
 import com.acikgozkaan.borrowing_service.entity.Borrowing;
 import com.acikgozkaan.borrowing_service.entity.Status;
 import com.acikgozkaan.borrowing_service.repository.BorrowingRepository;
-import com.acikgozkaan.user_service.core.exception.UserNotFoundException;
-import com.acikgozkaan.user_service.entity.User;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,15 +47,15 @@ public class BorrowingService {
     @Transactional
     public Borrowing createBorrowing(String userId, Long bookId) {
         try {
-            User user = userServiceClient.getUserById(userId);
+            FeignUserResponse userResponse = userServiceClient.getUserById(userId);
         } catch (FeignException.NotFound e) {
-            throw new UserNotFoundException("User not found with id: " + userId);
+            throw new BorrowingNotFoundException("User not found with id: " + userId);
         }
 
         try {
-            Book book = bookServiceClient.getBookById(bookId);
+            FeignBookResponse bookResponse = bookServiceClient.getBookById(bookId);
         } catch (FeignException.NotFound e) {
-            throw new BookNotFoundException("Book not found with id: "+bookId);
+            throw new BorrowingNotFoundException("Book not found with id: "+bookId);
         }
 
         Borrowing borrowing = Borrowing.builder()

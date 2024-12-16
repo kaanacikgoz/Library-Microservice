@@ -20,7 +20,7 @@ public class BorrowingController {
         this.borrowingService = borrowingService;
     }
 
-    @PostMapping("/user/{userId}/book/{bookId}")
+    @PostMapping("/users/{userId}/books/{bookId}")
     public ResponseEntity<Borrowing> createBorrowing(@PathVariable String userId, @PathVariable Long bookId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(borrowingService.createBorrowing(userId, bookId));
     }

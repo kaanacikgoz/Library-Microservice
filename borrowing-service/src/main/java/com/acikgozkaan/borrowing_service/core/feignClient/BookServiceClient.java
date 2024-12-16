@@ -1,6 +1,6 @@
 package com.acikgozkaan.borrowing_service.core.feignClient;
 
-import com.acikgozkaan.book_service.entity.Book;
+import com.acikgozkaan.borrowing_service.dto.response.FeignBookResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface BookServiceClient {
 
     @GetMapping("/books/{id}")
-    Book getBookById(@PathVariable Long id);
+    FeignBookResponse getBookById(@PathVariable Long id);
 
 }
